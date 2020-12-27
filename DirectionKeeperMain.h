@@ -11,6 +11,7 @@
 #define DirectionKeeperMAIN_H
 
 //(*Headers(DirectionKeeperFrame)
+#include <wx/button.h>
 #include <wx/frame.h>
 #include <wx/menu.h>
 #include <wx/stattext.h>
@@ -47,6 +48,9 @@ class MainLoop : public wxTimer
         void Notify();
         void start();
         void stop();
+
+        int8_t LeftValue;
+        int8_t RightValue;
 };
 
 
@@ -65,6 +69,8 @@ class DirectionKeeperFrame: public wxFrame
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnTextCtrl1Text(wxCommandEvent& event);
+        void OnButtonLeftClick(wxCommandEvent& event);
+        void OnButtonLeftClick1(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(DirectionKeeperFrame)
@@ -76,12 +82,14 @@ class DirectionKeeperFrame: public wxFrame
         static const long ID_STATICTEXT3;
         static const long ID_STATICTEXT4;
         static const long ID_TXROLL;
+        static const long ID_BUTTON_LEFT;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
 
         //(*Declarations(DirectionKeeperFrame)
+        wxButton* ButtonLeft;
         wxStaticText* StaticText1;
         wxStaticText* StaticText2;
         wxStaticText* StaticText3;

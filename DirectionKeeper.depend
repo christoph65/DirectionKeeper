@@ -4,7 +4,8 @@
 	"DirectionKeeperMain.h"
 	<wx/image.h>
 
-1591041892 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperApp.h
+1602943235 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperApp.h
+	<wx/app.h>
 	<wx/app.h>
 
 1546487181 /usr/include/wx-3.0/wx/app.h
@@ -580,13 +581,15 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/app.h
 
-1591527522 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
+1609101640 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
+	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
 	<wx/stattext.h>
 	<wx/statusbr.h>
 	<wx/textctrl.h>
 	<wx/timer.h>
+	<wiringSerial.h>
 
 1546487181 /usr/include/wx-3.0/wx/frame.h
 	"wx/toplevel.h"
@@ -1002,11 +1005,24 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/stattext.h
 
-1591527833 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
+1609096855 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
 	"DirectionKeeperMain.h"
 	<wx/msgdlg.h>
 	<sys/ioctl.h>
 	<linux/i2c-dev.h>
+	<wx/intl.h>
+	<wx/string.h>
+	"DirectionKeeperMain.h"
+	<wx/msgdlg.h>
+	<sys/ioctl.h>
+	<linux/i2c-dev.h>
+	<wx/intl.h>
+	<wx/string.h>
+	"DirectionKeeperMain.h"
+	<wx/msgdlg.h>
+	<sys/ioctl.h>
+	<linux/i2c-dev.h>
+	<wiringSerial.h>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -1062,45 +1078,33 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/msgdlg.h
 
-1591892012 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
-	"DirectionKeeperMain.h"
-	<wx/msgdlg.h>
-	<sys/ioctl.h>
-	<linux/i2c-dev.h>
-	<wx/intl.h>
-	<wx/string.h>
-
-1591527522 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
-	<wx/frame.h>
-	<wx/menu.h>
-	<wx/stattext.h>
-	<wx/statusbr.h>
-	<wx/textctrl.h>
-	<wx/timer.h>
-
-1602943235 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperApp.cpp
+1609098519 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperApp.cpp
 	"DirectionKeeperApp.h"
 	"DirectionKeeperMain.h"
 	<wx/image.h>
 
-1602943235 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperApp.h
-	<wx/app.h>
+1546487181 /usr/include/wx-3.0/wx/button.h
+	"wx/defs.h"
+	"wx/anybutton.h"
+	"wx/univ/button.h"
+	"wx/msw/button.h"
+	"wx/motif/button.h"
+	"wx/gtk/button.h"
+	"wx/gtk1/button.h"
+	"wx/osx/button.h"
+	"wx/cocoa/button.h"
+	"wx/os2/button.h"
 
-1609096855 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
-	<wx/frame.h>
-	<wx/menu.h>
-	<wx/stattext.h>
-	<wx/statusbr.h>
-	<wx/textctrl.h>
-	<wx/timer.h>
-	<wiringSerial.h>
+1546487181 /usr/include/wx-3.0/wx/anybutton.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+	"wx/control.h"
+	"wx/univ/anybutton.h"
+	"wx/msw/anybutton.h"
+	"wx/gtk/anybutton.h"
+	"wx/osx/anybutton.h"
 
-1609096855 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
-	"DirectionKeeperMain.h"
-	<wx/msgdlg.h>
-	<sys/ioctl.h>
-	<linux/i2c-dev.h>
-	<wiringSerial.h>
-	<wx/intl.h>
-	<wx/string.h>
+1546487181 /usr/include/wx-3.0/wx/gtk/anybutton.h
+
+1546487181 /usr/include/wx-3.0/wx/gtk/button.h
 

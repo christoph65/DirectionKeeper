@@ -42,6 +42,11 @@
 			<pos>136,128</pos>
 			<size>120,32</size>
 		</object>
+		<object class="wxButton" name="ID_BUTTON_LEFT" subclass="wxButtonLeft" variable="ButtonLeft" member="yes">
+			<label>Left</label>
+			<pos>64,200</pos>
+			<handler function="OnButtonLeftClick1" entry="EVT_BUTTON" />
+		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">
 				<label>&amp;File</label>

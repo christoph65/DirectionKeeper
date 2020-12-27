@@ -54,6 +54,7 @@ const long DirectionKeeperFrame::ID_STATICTEXT2 = wxNewId();
 const long DirectionKeeperFrame::ID_STATICTEXT3 = wxNewId();
 const long DirectionKeeperFrame::ID_STATICTEXT4 = wxNewId();
 const long DirectionKeeperFrame::ID_TXROLL = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON_LEFT = wxNewId();
 const long DirectionKeeperFrame::idMenuQuit = wxNewId();
 const long DirectionKeeperFrame::idMenuAbout = wxNewId();
 const long DirectionKeeperFrame::ID_STATUSBAR1 = wxNewId();
@@ -77,6 +78,8 @@ MainLoop::MainLoop(wxTextCtrl* logOutput, wxTextCtrl* txBearing, wxTextCtrl* txP
 
     logOutput->Clear();
     *logOutput << "Started DirectionKeeper V0.0 alpha\r";
+
+    LeftValue = 0;
 }
 
 
@@ -131,18 +134,22 @@ void MainLoop::Notify()
 	char strptr[50];
 	int chanel;
 	chanel = 0;
-	lastSendCmdValueArray[chanel] = -10;
-	sprintf(strptr, "C%d%02X\r", chanel + 1,(int8_t)lastSendCmdValueArray[chanel]);
-	// delete the preceeding "FFFFFF" if value is minus
-	// not needed in Ardouino C++
-	if (lastSendCmdValueArray[chanel] < 0) {
-        strptr[2] = strptr[8];
-        strptr[3] = strptr[9];
-        strptr[4] = strptr[10];
-        strptr[5] = strptr[11];
-        strptr[6] = strptr[12];
+
+	if (LeftValue != lastSendCmdValueArray[0]) {
+        lastSendCmdValueArray[0] = LeftValue;
+        sprintf(strptr, "C%d%02X\r", chanel + 1,(int8_t)lastSendCmdValueArray[chanel]);
+        // delete the preceeding "FFFFFF" if value is minus
+        // not needed in Ardouino C++
+        if (lastSendCmdValueArray[chanel] < 0) {
+            strptr[2] = strptr[8];
+            strptr[3] = strptr[9];
+            strptr[4] = strptr[10];
+            strptr[5] = strptr[11];
+            strptr[6] = strptr[12];
+        }
+        serialPuts(fdSerial, strptr);
 	}
-	serialPuts(fdSerial, strptr);
+
 
 	// TODO Serial Values check and then send out the complete command
 	// Needs to convert input values to Command
@@ -204,6 +211,7 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Pitch"), wxPoint(40,88), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Roll"), wxPoint(40,136), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
     txRoll = new wxTextCtrl(this, ID_TXROLL, _("Text"), wxPoint(136,128), wxSize(120,32), 0, wxDefaultValidator, _T("ID_TXROLL"));
+    ButtonLeft = new wxButton(this, ID_BUTTON_LEFT, _("Left"), wxPoint(64,200), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_LEFT"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -222,6 +230,7 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     SetStatusBar(StatusBar1);
 
     Connect(ID_TXBEARING,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&DirectionKeeperFrame::OnTextCtrl1Text);
+    Connect(ID_BUTTON_LEFT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonLeftClick1);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnAbout);
     //*)
@@ -251,4 +260,9 @@ void DirectionKeeperFrame::OnAbout(wxCommandEvent& event)
 
 void DirectionKeeperFrame::OnTextCtrl1Text(wxCommandEvent& event)
 {
+}
+
+void DirectionKeeperFrame::OnButtonLeftClick1(wxCommandEvent& event)
+{
+    mainLoop->LeftValue = mainLoop->LeftValue + 1;
 }
