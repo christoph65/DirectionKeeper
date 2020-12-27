@@ -44,6 +44,26 @@ wxString wxbuildinfo(wxbuildinfoformat format)
     return wxbuild;
 }
 
+
+//(*IdInit(DirectionKeeperFrame)
+const long DirectionKeeperFrame::ID_TXBEARING = wxNewId();
+const long DirectionKeeperFrame::ID_TXPITCH = wxNewId();
+const long DirectionKeeperFrame::ID_LOGOUTPUT = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT1 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT2 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT3 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT4 = wxNewId();
+const long DirectionKeeperFrame::ID_TXROLL = wxNewId();
+const long DirectionKeeperFrame::idMenuQuit = wxNewId();
+const long DirectionKeeperFrame::idMenuAbout = wxNewId();
+const long DirectionKeeperFrame::ID_STATUSBAR1 = wxNewId();
+//*)
+
+BEGIN_EVENT_TABLE(DirectionKeeperFrame,wxFrame)
+    //(*EventTable(DirectionKeeperFrame)
+    //*)
+END_EVENT_TABLE()
+
 // Constructor on create
 
 MainLoop::MainLoop(wxTextCtrl* logOutput, wxTextCtrl* txBearing, wxTextCtrl* txPitch, wxTextCtrl* txRoll) : wxTimer()
@@ -106,6 +126,24 @@ void MainLoop::Notify()
 		*txRoll << outString;
 	}
 
+    // serialPrintf(fdSerial,"test");
+	// serialPutchar(fdSerial,'y');
+	char strptr[50];
+	int chanel;
+	chanel = 0;
+	lastSendCmdValueArray[chanel] = -10;
+	sprintf(strptr, "C%d%02X\r", chanel + 1,(int8_t)lastSendCmdValueArray[chanel]);
+	// delete the preceeding "FFFFFF" if value is minus
+	// not needed in Ardouino C++
+	if (lastSendCmdValueArray[chanel] < 0) {
+        strptr[2] = strptr[8];
+        strptr[3] = strptr[9];
+        strptr[4] = strptr[10];
+        strptr[5] = strptr[11];
+        strptr[6] = strptr[12];
+	}
+	serialPuts(fdSerial, strptr);
+
 	// TODO Serial Values check and then send out the complete command
 	// Needs to convert input values to Command
 
@@ -145,26 +183,6 @@ void MainLoop::stop()
     serialClose(fdSerial);
     close(fdCMPS14);
 }
-
-
-//(*IdInit(DirectionKeeperFrame)
-const long DirectionKeeperFrame::ID_TXBEARING = wxNewId();
-const long DirectionKeeperFrame::ID_TXPITCH = wxNewId();
-const long DirectionKeeperFrame::ID_LOGOUTPUT = wxNewId();
-const long DirectionKeeperFrame::ID_STATICTEXT1 = wxNewId();
-const long DirectionKeeperFrame::ID_STATICTEXT2 = wxNewId();
-const long DirectionKeeperFrame::ID_STATICTEXT3 = wxNewId();
-const long DirectionKeeperFrame::ID_STATICTEXT4 = wxNewId();
-const long DirectionKeeperFrame::ID_TXROLL = wxNewId();
-const long DirectionKeeperFrame::idMenuQuit = wxNewId();
-const long DirectionKeeperFrame::idMenuAbout = wxNewId();
-const long DirectionKeeperFrame::ID_STATUSBAR1 = wxNewId();
-//*)
-
-BEGIN_EVENT_TABLE(DirectionKeeperFrame,wxFrame)
-    //(*EventTable(DirectionKeeperFrame)
-    //*)
-END_EVENT_TABLE()
 
 DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
 {

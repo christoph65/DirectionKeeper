@@ -39,6 +39,7 @@ class MainLoop : public wxTimer
         const int BAUDRATE = 38400;
         int  address = 0x60;	// Address of CMPS11 shifted right one bit
         unsigned char buf[10];	// Buffer for data being read/ written on the i2c bus
+        int8_t lastSendCmdValueArray[6];
 
 
     public:
@@ -47,6 +48,7 @@ class MainLoop : public wxTimer
         void start();
         void stop();
 };
+
 
 class DirectionKeeperFrame: public wxFrame
 {
