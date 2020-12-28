@@ -29,6 +29,8 @@ class MainLoop : public wxTimer
         wxTextCtrl* txPitch;
         wxTextCtrl* txRoll;
         wxTextCtrl* logOutput;
+        wxTextCtrl* txLeftMotor;
+        wxTextCtrl* txRightMotor;
         int Counter;
 
         // for cmps 14
@@ -40,17 +42,18 @@ class MainLoop : public wxTimer
         const int BAUDRATE = 38400;
         int  address = 0x60;	// Address of CMPS11 shifted right one bit
         unsigned char buf[10];	// Buffer for data being read/ written on the i2c bus
-        int8_t lastSendCmdValueArray[6];
+        int lastSendCmdValueArray[6];
+        void sendMotorSpeed(int chanel, int pwvalue, wxTextCtrl* wxTxDisp);
 
 
     public:
-        MainLoop (wxTextCtrl* logOutput, wxTextCtrl* txBearing, wxTextCtrl* txPitch, wxTextCtrl* txRoll);
+        MainLoop (wxTextCtrl* ilogOutput, wxTextCtrl* itxBearing, wxTextCtrl* itxPitch, wxTextCtrl* itxRoll, wxTextCtrl* itxLeftMotor, wxTextCtrl* itxRightMotor);
         void Notify();
         void start();
         void stop();
 
-        int8_t LeftValue;
-        int8_t RightValue;
+        int LeftValue;
+        int RightValue;
 };
 
 
@@ -71,6 +74,10 @@ class DirectionKeeperFrame: public wxFrame
         void OnTextCtrl1Text(wxCommandEvent& event);
         void OnButtonLeftClick(wxCommandEvent& event);
         void OnButtonLeftClick1(wxCommandEvent& event);
+        void OnButtonRightClick(wxCommandEvent& event);
+        void OnButtonForwardClick(wxCommandEvent& event);
+        void OnButtonBackClick(wxCommandEvent& event);
+        void OnButtonStopClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(DirectionKeeperFrame)
@@ -83,13 +90,23 @@ class DirectionKeeperFrame: public wxFrame
         static const long ID_STATICTEXT4;
         static const long ID_TXROLL;
         static const long ID_BUTTON_LEFT;
+        static const long ID_BUTTON_RIGHT;
+        static const long ID_BUTTON_STOP;
+        static const long ID_BUTTON_FORWARD;
+        static const long ID_BUTTON_BACK;
+        static const long ID_TXLEFTMOTOR;
+        static const long ID_TXRIGHTMOTOR;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
 
         //(*Declarations(DirectionKeeperFrame)
+        wxButton* ButtonBack;
+        wxButton* ButtonForward;
         wxButton* ButtonLeft;
+        wxButton* ButtonRight;
+        wxButton* ButtonStop;
         wxStaticText* StaticText1;
         wxStaticText* StaticText2;
         wxStaticText* StaticText3;
@@ -97,7 +114,9 @@ class DirectionKeeperFrame: public wxFrame
         wxStatusBar* StatusBar1;
         wxTextCtrl* LogOutput;
         wxTextCtrl* txBearing;
+        wxTextCtrl* txLeftMotor;
         wxTextCtrl* txPitch;
+        wxTextCtrl* txRightMotor;
         wxTextCtrl* txRoll;
         //*)
 

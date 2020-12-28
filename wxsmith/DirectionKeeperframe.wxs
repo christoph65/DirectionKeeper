@@ -42,10 +42,41 @@
 			<pos>136,128</pos>
 			<size>120,32</size>
 		</object>
-		<object class="wxButton" name="ID_BUTTON_LEFT" subclass="wxButtonLeft" variable="ButtonLeft" member="yes">
+		<object class="wxButton" name="ID_BUTTON_LEFT" variable="ButtonLeft" member="yes">
 			<label>Left</label>
-			<pos>64,200</pos>
+			<pos>64,232</pos>
 			<handler function="OnButtonLeftClick1" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON_RIGHT" variable="ButtonRight" member="yes">
+			<label>Right</label>
+			<pos>240,232</pos>
+			<handler function="OnButtonRightClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON_STOP" variable="ButtonStop" member="yes">
+			<label>Stop</label>
+			<pos>152,232</pos>
+			<handler function="OnButtonStopClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON_FORWARD" variable="ButtonForward" member="yes">
+			<label>Forward</label>
+			<pos>152,192</pos>
+			<handler function="OnButtonForwardClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON_BACK" variable="ButtonBack" member="yes">
+			<label>Back</label>
+			<pos>152,272</pos>
+			<handler function="OnButtonBackClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TXLEFTMOTOR" variable="txLeftMotor" member="yes">
+			<value>Text</value>
+			<pos>64,192</pos>
+			<size>86,32</size>
+		</object>
+		<object class="wxTextCtrl" name="ID_TXRIGHTMOTOR" variable="txRightMotor" member="yes">
+			<value>Text</value>
+			<pos>240,192</pos>
+			<size>86,32</size>
+			<style>wxTE_RIGHT</style>
 		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">

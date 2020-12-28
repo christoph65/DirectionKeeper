@@ -581,7 +581,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/app.h
 
-1609101640 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
+1609177573 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
@@ -1005,19 +1005,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/stattext.h
 
-1609096855 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
-	"DirectionKeeperMain.h"
-	<wx/msgdlg.h>
-	<sys/ioctl.h>
-	<linux/i2c-dev.h>
-	<wx/intl.h>
-	<wx/string.h>
-	"DirectionKeeperMain.h"
-	<wx/msgdlg.h>
-	<sys/ioctl.h>
-	<linux/i2c-dev.h>
-	<wx/intl.h>
-	<wx/string.h>
+1609175714 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
 	"DirectionKeeperMain.h"
 	<wx/msgdlg.h>
 	<sys/ioctl.h>

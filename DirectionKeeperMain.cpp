@@ -55,6 +55,12 @@ const long DirectionKeeperFrame::ID_STATICTEXT3 = wxNewId();
 const long DirectionKeeperFrame::ID_STATICTEXT4 = wxNewId();
 const long DirectionKeeperFrame::ID_TXROLL = wxNewId();
 const long DirectionKeeperFrame::ID_BUTTON_LEFT = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON_RIGHT = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON_STOP = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON_FORWARD = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON_BACK = wxNewId();
+const long DirectionKeeperFrame::ID_TXLEFTMOTOR = wxNewId();
+const long DirectionKeeperFrame::ID_TXRIGHTMOTOR = wxNewId();
 const long DirectionKeeperFrame::idMenuQuit = wxNewId();
 const long DirectionKeeperFrame::idMenuAbout = wxNewId();
 const long DirectionKeeperFrame::ID_STATUSBAR1 = wxNewId();
@@ -67,19 +73,22 @@ END_EVENT_TABLE()
 
 // Constructor on create
 
-MainLoop::MainLoop(wxTextCtrl* logOutput, wxTextCtrl* txBearing, wxTextCtrl* txPitch, wxTextCtrl* txRoll) : wxTimer()
+MainLoop::MainLoop(wxTextCtrl* ilogOutput, wxTextCtrl* itxBearing, wxTextCtrl* itxPitch, wxTextCtrl* itxRoll, wxTextCtrl* itxLeftMotor, wxTextCtrl* itxRightMotor) : wxTimer()
 {
     // fill pointers to fields in the GUI
-    MainLoop::txBearing = txBearing;
-    MainLoop::txPitch = txPitch;
-    MainLoop::txRoll = txRoll;
-    MainLoop::logOutput = logOutput;
+    MainLoop::txBearing = itxBearing;
+    MainLoop::txPitch = itxPitch;
+    MainLoop::txRoll = itxRoll;
+    MainLoop::logOutput = ilogOutput;
+    MainLoop::txRightMotor = itxRightMotor;
+    MainLoop::txLeftMotor = itxLeftMotor;
     Counter = 0;
 
     logOutput->Clear();
     *logOutput << "Started DirectionKeeper V0.0 alpha\r";
 
     LeftValue = 0;
+    RightValue = 0;
 }
 
 
@@ -131,13 +140,21 @@ void MainLoop::Notify()
 
     // serialPrintf(fdSerial,"test");
 	// serialPutchar(fdSerial,'y');
-	char strptr[50];
-	int chanel;
-	chanel = 0;
+    sendMotorSpeed(0,LeftValue,txLeftMotor);
+    sendMotorSpeed(1,RightValue,txRightMotor);
 
-	if (LeftValue != lastSendCmdValueArray[0]) {
-        lastSendCmdValueArray[0] = LeftValue;
-        sprintf(strptr, "C%d%02X\r", chanel + 1,(int8_t)lastSendCmdValueArray[chanel]);
+	// TODO Serial Values check and then send out the complete command
+	// Needs to convert input values to Command
+
+}
+
+void MainLoop::sendMotorSpeed(int chanel, int pwvalue, wxTextCtrl* wxTxDisp){
+	char strptr[50];
+	if (pwvalue > 125) pwvalue = 125;
+	if (pwvalue < -125) pwvalue = -125;
+	if (pwvalue != lastSendCmdValueArray[chanel]) {
+        lastSendCmdValueArray[chanel] = pwvalue;
+        sprintf(strptr, "C%d%02X\r", chanel + 1,lastSendCmdValueArray[chanel]);
         // delete the preceeding "FFFFFF" if value is minus
         // not needed in Ardouino C++
         if (lastSendCmdValueArray[chanel] < 0) {
@@ -147,13 +164,10 @@ void MainLoop::Notify()
             strptr[5] = strptr[11];
             strptr[6] = strptr[12];
         }
+        wxTxDisp->Clear();
+        *wxTxDisp << strptr;
         serialPuts(fdSerial, strptr);
 	}
-
-
-	// TODO Serial Values check and then send out the complete command
-	// Needs to convert input values to Command
-
 }
 
 void MainLoop::start()
@@ -211,7 +225,13 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Pitch"), wxPoint(40,88), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Roll"), wxPoint(40,136), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
     txRoll = new wxTextCtrl(this, ID_TXROLL, _("Text"), wxPoint(136,128), wxSize(120,32), 0, wxDefaultValidator, _T("ID_TXROLL"));
-    ButtonLeft = new wxButton(this, ID_BUTTON_LEFT, _("Left"), wxPoint(64,200), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_LEFT"));
+    ButtonLeft = new wxButton(this, ID_BUTTON_LEFT, _("Left"), wxPoint(64,232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_LEFT"));
+    ButtonRight = new wxButton(this, ID_BUTTON_RIGHT, _("Right"), wxPoint(240,232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_RIGHT"));
+    ButtonStop = new wxButton(this, ID_BUTTON_STOP, _("Stop"), wxPoint(152,232), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_STOP"));
+    ButtonForward = new wxButton(this, ID_BUTTON_FORWARD, _("Forward"), wxPoint(152,192), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_FORWARD"));
+    ButtonBack = new wxButton(this, ID_BUTTON_BACK, _("Back"), wxPoint(152,272), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_BACK"));
+    txLeftMotor = new wxTextCtrl(this, ID_TXLEFTMOTOR, _("Text"), wxPoint(64,192), wxSize(86,32), 0, wxDefaultValidator, _T("ID_TXLEFTMOTOR"));
+    txRightMotor = new wxTextCtrl(this, ID_TXRIGHTMOTOR, _("Text"), wxPoint(240,192), wxSize(86,32), wxTE_RIGHT, wxDefaultValidator, _T("ID_TXRIGHTMOTOR"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -231,11 +251,15 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
 
     Connect(ID_TXBEARING,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&DirectionKeeperFrame::OnTextCtrl1Text);
     Connect(ID_BUTTON_LEFT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonLeftClick1);
+    Connect(ID_BUTTON_RIGHT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonRightClick);
+    Connect(ID_BUTTON_STOP,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonStopClick);
+    Connect(ID_BUTTON_FORWARD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonForwardClick);
+    Connect(ID_BUTTON_BACK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonBackClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnAbout);
     //*)
 
-    mainLoop = new MainLoop (LogOutput, txBearing, txPitch, txRoll);
+    mainLoop = new MainLoop (LogOutput, txBearing, txPitch, txRoll, txLeftMotor, txRightMotor);
     mainLoop->start();
 
 }
@@ -264,5 +288,40 @@ void DirectionKeeperFrame::OnTextCtrl1Text(wxCommandEvent& event)
 
 void DirectionKeeperFrame::OnButtonLeftClick1(wxCommandEvent& event)
 {
+    mainLoop->LeftValue = mainLoop->LeftValue - 1;
+    mainLoop->RightValue = mainLoop->RightValue + 1;
+}
+
+void DirectionKeeperFrame::OnButtonRightClick(wxCommandEvent& event)
+{
     mainLoop->LeftValue = mainLoop->LeftValue + 1;
+    mainLoop->RightValue = mainLoop->RightValue - 1;
+}
+
+void DirectionKeeperFrame::OnButtonForwardClick(wxCommandEvent& event)
+{
+    if( mainLoop->RightValue == 0 && mainLoop->LeftValue == 0){
+        mainLoop->LeftValue = 0x10 - 3;
+        mainLoop->RightValue = 0x09 - 3;
+    }
+
+    mainLoop->LeftValue = mainLoop->LeftValue + 3;
+    mainLoop->RightValue = mainLoop->RightValue + 3;
+}
+
+void DirectionKeeperFrame::OnButtonBackClick(wxCommandEvent& event)
+{
+    if( mainLoop->RightValue == 0 && mainLoop->LeftValue == 0){
+        mainLoop->LeftValue = -4;
+        mainLoop->RightValue = -10;
+    }
+
+    mainLoop->LeftValue = mainLoop->LeftValue - 3;
+    mainLoop->RightValue = mainLoop->RightValue - 3;
+}
+
+void DirectionKeeperFrame::OnButtonStopClick(wxCommandEvent& event)
+{
+    mainLoop->RightValue = 0;
+    mainLoop->LeftValue = 0;
 }
