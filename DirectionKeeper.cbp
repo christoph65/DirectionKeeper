@@ -43,7 +43,9 @@
 		<Unit filename="DirectionKeeperApp.h" />
 		<Unit filename="DirectionKeeperMain.cpp" />
 		<Unit filename="DirectionKeeperMain.h" />
+		<Unit filename="include/DirectionControler.h" />
 		<Unit filename="include/MainLoop.h" />
+		<Unit filename="src/DirectionControler.cpp" />
 		<Unit filename="src/MainLoop.cpp" />
 		<Unit filename="wxsmith/DirectionKeeperframe.wxs" />
 		<Extensions>

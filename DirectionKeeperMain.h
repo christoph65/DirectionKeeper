@@ -62,12 +62,22 @@ class DirectionKeeperFrame: public wxFrame
         static const long ID_BUTTON_BACK;
         static const long ID_TXLEFTMOTOR;
         static const long ID_TXRIGHTMOTOR;
+        static const long ID_BUTTON1;
+        static const long ID_BUTTON2;
+        static const long ID_BUTTON3;
+        static const long ID_BUTTON4;
+        static const long ID_BUTTON5;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
 
         //(*Declarations(DirectionKeeperFrame)
+        wxButton* Button1;
+        wxButton* Button2;
+        wxButton* Button3;
+        wxButton* Button4;
+        wxButton* Button5;
         wxButton* ButtonBack;
         wxButton* ButtonForward;
         wxButton* ButtonLeft;

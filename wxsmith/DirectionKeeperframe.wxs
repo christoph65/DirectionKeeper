@@ -2,45 +2,47 @@
 <wxsmith>
 	<object class="wxFrame" name="DirectionKeeperFrame">
 		<title>DirectionKeeper</title>
-		<size>1041,450</size>
+		<size>705,363</size>
 		<maxsize>-1,-1</maxsize>
+		<id_arg>0</id_arg>
 		<object class="wxTextCtrl" name="ID_TXBEARING" variable="txBearing" member="yes">
 			<value>Text</value>
-			<pos>136,32</pos>
+			<pos>64,48</pos>
 			<size>120,26</size>
 			<handler function="OnTextCtrl1Text" entry="EVT_TEXT" />
 		</object>
 		<object class="wxTextCtrl" name="ID_TXPITCH" variable="txPitch" member="yes">
 			<value>Text</value>
-			<pos>136,80</pos>
-			<size>120,32</size>
+			<pos>264,8</pos>
+			<size>56,32</size>
 		</object>
 		<object class="wxTextCtrl" name="ID_LOGOUTPUT" variable="LogOutput" member="yes">
 			<value>Text</value>
-			<pos>480,56</pos>
-			<size>536,376</size>
+			<pos>368,32</pos>
+			<size>320,280</size>
 			<style>wxTE_MULTILINE</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
-			<label>Log Output</label>
-			<pos>480,32</pos>
+			<label>Operation Status</label>
+			<pos>368,8</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Bearing</label>
-			<pos>40,40</pos>
+			<pos>64,16</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 			<label>Pitch</label>
-			<pos>40,88</pos>
+			<pos>216,16</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 			<label>Roll</label>
-			<pos>40,136</pos>
+			<pos>216,48</pos>
+			<size>40,22</size>
 		</object>
 		<object class="wxTextCtrl" name="ID_TXROLL" variable="txRoll" member="yes">
 			<value>Text</value>
-			<pos>136,128</pos>
-			<size>120,32</size>
+			<pos>264,40</pos>
+			<size>56,32</size>
 		</object>
 		<object class="wxButton" name="ID_BUTTON_LEFT" variable="ButtonLeft" member="yes">
 			<label>Left</label>
@@ -77,6 +79,26 @@
 			<pos>240,192</pos>
 			<size>86,32</size>
 			<style>wxTE_RIGHT</style>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
+			<label>Set Dir</label>
+			<pos>152,104</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
+			<label>R+1</label>
+			<pos>240,104</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Button3" member="yes">
+			<label>L+1</label>
+			<pos>64,104</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button4" member="yes">
+			<label>R+10</label>
+			<pos>240,136</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
+			<label>L+10</label>
+			<pos>64,136</pos>
 		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">

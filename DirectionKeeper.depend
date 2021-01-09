@@ -581,7 +581,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/app.h
 
-1609851079 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
+1609856734 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
@@ -1006,7 +1006,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/stattext.h
 
-1609850296 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
+1610179334 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
 	"DirectionKeeperMain.h"
 	<wx/msgdlg.h>
 	"MainLoop.h"
@@ -1095,7 +1095,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/button.h
 
-1609850959 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/MainLoop.h
+1610122956 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/MainLoop.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
@@ -1103,4 +1103,23 @@
 	<wx/statusbr.h>
 	<wx/textctrl.h>
 	<wx/timer.h>
+	"DirectionControler.h"
+
+1610195764 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/DirectionControler.h
+	<fstream>
+
+1610178976 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/DirectionControler.cpp
+	<sys/ioctl.h>
+	<iostream>
+	<fstream>
+	<ctime>
+	<unistd.h>
+	<fcntl.h>
+	<linux/i2c-dev.h>
+	<wiringSerial.h>
+	"DirectionControler.h"
+
+1610177689 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/MainLoop.cpp
+	<wx/msgdlg.h>
+	"MainLoop.h"
 
