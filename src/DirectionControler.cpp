@@ -23,20 +23,38 @@ using namespace std;
 DirectionControler::DirectionControler()
 {
     // Constructor
-    MotorPwLeftValueActual = 0;
-    MotorPwRightValueActual = 0;
-    MotorPwLeftValueActual = 0;
-    MotorPwRightValueActual = 0;
+    motorPwLeftValueActual = 0;
+    motorPwRightValueActual = 0;
+    MotorPwLeftValueSet = 0;
+    MotorPwRightValueSet = 0;
     Bearing = 0;
     Roll = 0;
     Pitch = 0;
+    EnableDirectionKeeping = false;
+    directionKeepingAlreadyActive = false;
+
+    // Parameter for PID
+    KProp = 1;
+    KIntegral = 0;
+    KDifferential = 0;
 }
 
-bool DirectionControler::Start(){
+bool DirectionControler::Start(int timerStepInMs){
+
+    // Initialiaze Functional Log
     logDirCtrlFunc.open ("logDirCtrlFunc.log", std::ofstream::app);
     time_t now = time(0);
     char* dt = ctime(&now);
     logDirCtrlFunc << "DirectionControler started: " << dt;
+
+    // timeStepInMs = 1 / (1000 * (float)timerStepInMs);
+    timeStepInMs = (float)timerStepInMs;
+
+    // Initialize Data log
+    logDirCtrlData.open ("logDirCtrlData.log", std::ofstream::app);
+    logDirCtrlData << dt;
+    logDirCtrlData << "bearingAtActivation;Bearing;diffBearing;diffSum;diffSumLast;pwLeftAtActivation;"
+                   << "pwRigthAtActivation;pwLeft;pwRight;pwChange;KProp;KInt;KDiff;timeStepInSec\r\n";
 
     if ((fdCMPS14 = open(fileName, O_RDWR)) < 0) {
         // Open port for reading and writing
@@ -68,16 +86,20 @@ void DirectionControler::Notify() {
 
     readFromCMPS14();
 
-    /* neu: directionPID */
-    /* Steuergröße y als Input für Regler ist numerischer Wert. Wird immer umgerechnet */
-    /* in die Differenz aus von PW Left und Right */
-    /* todo: Regelstrecke genau definieren - Richtung ist w (Sollwert alias Führungsgröße) */
+    /* Offene Frage: wie verhält sich der Regler wenn es eine Differenz gibt zwischen Left und Right */
+    /* Antwort: ausprobieren */
 
-    /* todo logging of data - sollte leicht sein */
+    if (EnableDirectionKeeping) {
+        // Overwrites Set Values
+        controlDirectionPID();
+        /* do logging of Data */
+        logData();
+    }
+    else directionKeepingAlreadyActive = false;
 	// todo log all values to a file
 
-    MotorPwLeftValueActual = sendMotorSpeed(0, MotorPwLeftValueSet);
-    MotorPwRightValueActual = sendMotorSpeed(1, MotorPwRightValueSet);
+    motorPwLeftValueActual = sendMotorSpeed(0, MotorPwLeftValueSet);
+    motorPwRightValueActual = sendMotorSpeed(1, MotorPwRightValueSet);
 
 	/* serial Commands from Arduino UI */
 	/* >> Set Direction */
@@ -85,6 +107,96 @@ void DirectionControler::Notify() {
 	/* >> Turn off - richtiger shutdown, dass alles sauber beendet wird */
 }
 
+void DirectionControler::controlDirectionPID(){
+    if (!directionKeepingAlreadyActive){
+        motorPwRightValueActualStoredAtActivation = motorPwRightValueActual;
+        motorPwLeftValueActualStoredAtActivation = motorPwLeftValueActual;
+        bearingStoredAtActivation = Bearing;
+        directionKeepingAlreadyActive = true;
+    }
+
+    //  0 on top of circle, 0 to 90 is right side, 270 to 360 is left side
+    //  leftSide = minus  Value 0 to -180
+    //  rightSide = positive Value 0 to 180
+    //  SB = StoredBearing
+    //  MB = MeasuredBearing
+    //  SB is 180 to 360
+    //    left Side if MB is between SB-180 to SB
+    //    right Side if MB is between SB to 360 or between 0 to SB-180
+    //  SB is 0 to 180
+    //    left Side if MB between 0 to SB or between SB + 180 to 360
+    //    rigth Side if MB between S to S + 180
+
+    if (bearingStoredAtActivation >= 180) {
+        if ((Bearing >= (bearingStoredAtActivation - 180 )) && (Bearing <= bearingStoredAtActivation))
+            // left side negative
+            BearingDiff = Bearing - bearingStoredAtActivation;
+        else {
+            // right side
+            if (Bearing >= bearingStoredAtActivation)
+                BearingDiff = bearingStoredAtActivation - Bearing;
+            else
+                // Bearing must be a small value between 0 an 180
+                BearingDiff = Bearing + (360 - bearingStoredAtActivation);
+        }
+    } else {
+        if ((Bearing >= bearingStoredAtActivation) && ((Bearing - 180 ) <= bearingStoredAtActivation) )
+            // right side
+            BearingDiff = Bearing - bearingStoredAtActivation;
+        else {
+            // left side
+            if (Bearing <= 180)
+                BearingDiff = Bearing - bearingStoredAtActivation;
+            else
+                BearingDiff = (Bearing-360) - bearingStoredAtActivation;
+        }
+    }
+    diffSum = diffSum + BearingDiff;
+
+    pwChange = (KProp * BearingDiff) + (KIntegral * timeStepInMs * diffSum) + (KDifferential * (diffSum - diffSumLast) / timeStepInMs);
+    diffSumLast = diffSum;
+
+    // pwChange negative: Left Side and should drive to right side
+    MotorPwLeftValueSet = motorPwLeftValueActualStoredAtActivation;
+    MotorPwRightValueSet = motorPwRightValueActualStoredAtActivation;
+    if (pwChange < 0) {
+        // drive right - means make right motor slower
+        if (MotorPwRightValueSet > 0)
+            MotorPwRightValueSet += pwChange;
+        else
+            MotorPwRightValueSet -= pwChange;
+    } else if (pwChange > 0) {
+        // drive left - means make left motor slower
+        if (MotorPwLeftValueSet > 0)
+            MotorPwLeftValueSet -= pwChange;
+        else
+            MotorPwLeftValueSet += pwChange;
+    }
+}
+
+void DirectionControler::logData(){
+    /* todo logging of data - sollte leicht sein */
+    /* alles raus .. auch mit timestamp */
+
+    // bearingAtActivation;Bearing;diffBearing;diffSum;diffSumLast;pwLeftAtActivation;pwRigthAtActivation;pwLeft;pwRight;pwChange;KProp;
+    // KInt;KDiff;timeStepInSec
+
+    logDirCtrlData << bearingStoredAtActivation << ";";
+    logDirCtrlData << Bearing << ";";
+    logDirCtrlData << BearingDiff << ";";
+    logDirCtrlData << diffSum << ";";
+    logDirCtrlData << diffSumLast << ";";
+    logDirCtrlData << motorPwLeftValueActualStoredAtActivation << ";";
+    logDirCtrlData << motorPwRightValueActualStoredAtActivation << ";";
+    logDirCtrlData << motorPwLeftValueActual << ";";
+    logDirCtrlData << motorPwRightValueActual << ";";
+    logDirCtrlData << pwChange << ";";
+    logDirCtrlData << KProp << ";";
+    logDirCtrlData << KIntegral << ";";
+    logDirCtrlData << KDifferential << ";";
+    logDirCtrlData << timeStepInMs << ";";
+    logDirCtrlData << "\r\n";
+}
 
 void DirectionControler::readFromCMPS14(){
     buf[0] = 0; // this is the register we wish to read from
@@ -150,4 +262,14 @@ void DirectionControler::Close() {
     char* dt = ctime(&now);
     logDirCtrlFunc << "Stopped: " << dt << endl;
     logDirCtrlFunc.close();
+    logDirCtrlData.close();
 }
+
+int DirectionControler::MotorPwLeftValueActual(){
+    return motorPwLeftValueActual;
+}
+
+int DirectionControler::MotorPwRightValueActual(){
+    return motorPwRightValueActual;
+}
+

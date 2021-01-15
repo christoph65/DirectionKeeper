@@ -581,7 +581,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/app.h
 
-1609856734 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
+1610648949 /home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
@@ -1006,10 +1006,11 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/stattext.h
 
-1610179334 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
+1610701827 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/DirectionKeeperMain.cpp
 	"DirectionKeeperMain.h"
 	<wx/msgdlg.h>
 	"MainLoop.h"
+	<wx/font.h>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -1095,7 +1096,7 @@
 
 1546487181 /usr/include/wx-3.0/wx/gtk/button.h
 
-1610122956 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/MainLoop.h
+1610648792 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/MainLoop.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/menu.h>
@@ -1105,10 +1106,10 @@
 	<wx/timer.h>
 	"DirectionControler.h"
 
-1610195764 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/DirectionControler.h
+1610728503 /home/pi/Documents/CodeBlocks/DirectionKeeper/include/DirectionControler.h
 	<fstream>
 
-1610178976 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/DirectionControler.cpp
+1610658339 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/DirectionControler.cpp
 	<sys/ioctl.h>
 	<iostream>
 	<fstream>
@@ -1119,7 +1120,7 @@
 	<wiringSerial.h>
 	"DirectionControler.h"
 
-1610177689 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/MainLoop.cpp
+1610709510 source:/home/pi/Documents/CodeBlocks/DirectionKeeper/src/MainLoop.cpp
 	<wx/msgdlg.h>
 	"MainLoop.h"
 

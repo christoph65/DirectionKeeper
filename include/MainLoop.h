@@ -29,14 +29,24 @@ class MainLoop: public wxTimer
         wxTextCtrl* logOutput;
         wxTextCtrl* txLeftMotor;
         wxTextCtrl* txRightMotor;
-        DirectionControler* directionControler;
+        wxTextCtrl* txBearingDiff;
+        wxTextCtrl* txKProp;
+        wxTextCtrl* txKIntegral;
+        wxTextCtrl* txKDifferential;
+
+        int const timerInMs = 10;
 
     public:
-        MainLoop (wxTextCtrl* ilogOutput, wxTextCtrl* itxBearing, wxTextCtrl* itxPitch, wxTextCtrl* itxRoll, wxTextCtrl* itxLeftMotor, wxTextCtrl* itxRightMotor);
+        MainLoop (wxTextCtrl* ilogOutput, wxTextCtrl* itxBearing,
+                  wxTextCtrl* itxPitch, wxTextCtrl* itxRoll, wxTextCtrl* itxLeftMotor,
+                  wxTextCtrl* itxRightMotor, wxTextCtrl* itxBearingDiff,
+                  wxTextCtrl* itxKProp, wxTextCtrl* itxKIntegral, wxTextCtrl* itxKDifferential);
         void Notify();
-        void start();
-        void stop();
+        void Start();
+        void Stop();
+        void TogleLaneKeeping();
 
+        DirectionControler* directionControler;
         int LeftValue;
         int RightValue;
 };

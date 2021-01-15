@@ -44,6 +44,14 @@ class DirectionKeeperFrame: public wxFrame
         void OnButtonForwardClick(wxCommandEvent& event);
         void OnButtonBackClick(wxCommandEvent& event);
         void OnButtonStopClick(wxCommandEvent& event);
+        void OnButton1Click(wxCommandEvent& event);
+        void OnTextCtrl1Text1(wxCommandEvent& event);
+        void OnbtnKpPlusClick(wxCommandEvent& event);
+        void OnbtnKpMinusClick(wxCommandEvent& event);
+        void OnbtnKiPlusClick(wxCommandEvent& event);
+        void OnbtnKiMinusClick(wxCommandEvent& event);
+        void OnbtnKdPlusClick(wxCommandEvent& event);
+        void OnbtnKdMinusClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(DirectionKeeperFrame)
@@ -67,6 +75,19 @@ class DirectionKeeperFrame: public wxFrame
         static const long ID_BUTTON3;
         static const long ID_BUTTON4;
         static const long ID_BUTTON5;
+        static const long ID_STATICTEXT5;
+        static const long ID_STATICTEXT6;
+        static const long ID_STATICTEXT7;
+        static const long ID_TEXTCTRL1;
+        static const long ID_TEXTCTRL2;
+        static const long ID_TEXTCTRL3;
+        static const long ID_TEXTCTRL4;
+        static const long ID_BUTTON6;
+        static const long ID_BUTTON7;
+        static const long ID_BUTTON8;
+        static const long ID_BUTTON9;
+        static const long ID_BUTTON10;
+        static const long ID_BUTTON11;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
@@ -83,13 +104,26 @@ class DirectionKeeperFrame: public wxFrame
         wxButton* ButtonLeft;
         wxButton* ButtonRight;
         wxButton* ButtonStop;
+        wxButton* btnKdMinus;
+        wxButton* btnKdPlus;
+        wxButton* btnKiMinus;
+        wxButton* btnKiPlus;
+        wxButton* btnKpMinus;
+        wxButton* btnKpPlus;
         wxStaticText* StaticText1;
         wxStaticText* StaticText2;
         wxStaticText* StaticText3;
         wxStaticText* StaticText4;
+        wxStaticText* StaticText5;
+        wxStaticText* StaticText6;
+        wxStaticText* StaticText7;
         wxStatusBar* StatusBar1;
         wxTextCtrl* LogOutput;
         wxTextCtrl* txBearing;
+        wxTextCtrl* txBearingDiff;
+        wxTextCtrl* txKDifferential;
+        wxTextCtrl* txKIntegral;
+        wxTextCtrl* txKProp;
         wxTextCtrl* txLeftMotor;
         wxTextCtrl* txPitch;
         wxTextCtrl* txRightMotor;

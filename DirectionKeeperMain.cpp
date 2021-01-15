@@ -12,6 +12,7 @@
 #include "MainLoop.h"
 
 //(*InternalHeaders(DirectionKeeperFrame)
+#include <wx/font.h>
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
@@ -64,6 +65,19 @@ const long DirectionKeeperFrame::ID_BUTTON2 = wxNewId();
 const long DirectionKeeperFrame::ID_BUTTON3 = wxNewId();
 const long DirectionKeeperFrame::ID_BUTTON4 = wxNewId();
 const long DirectionKeeperFrame::ID_BUTTON5 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT5 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT6 = wxNewId();
+const long DirectionKeeperFrame::ID_STATICTEXT7 = wxNewId();
+const long DirectionKeeperFrame::ID_TEXTCTRL1 = wxNewId();
+const long DirectionKeeperFrame::ID_TEXTCTRL2 = wxNewId();
+const long DirectionKeeperFrame::ID_TEXTCTRL3 = wxNewId();
+const long DirectionKeeperFrame::ID_TEXTCTRL4 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON6 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON7 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON8 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON9 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON10 = wxNewId();
+const long DirectionKeeperFrame::ID_BUTTON11 = wxNewId();
 const long DirectionKeeperFrame::idMenuQuit = wxNewId();
 const long DirectionKeeperFrame::idMenuAbout = wxNewId();
 const long DirectionKeeperFrame::ID_STATUSBAR1 = wxNewId();
@@ -86,12 +100,12 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     wxMenuItem* MenuItem2;
 
     Create(parent, wxID_ANY, _("DirectionKeeper"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
-    SetClientSize(wxSize(705,363));
+    SetClientSize(wxSize(744,474));
     SetMaxSize(wxSize(-1,-1));
     txBearing = new wxTextCtrl(this, ID_TXBEARING, _("Text"), wxPoint(64,48), wxSize(120,26), 0, wxDefaultValidator, _T("ID_TXBEARING"));
     txPitch = new wxTextCtrl(this, ID_TXPITCH, _("Text"), wxPoint(264,8), wxSize(56,32), 0, wxDefaultValidator, _T("ID_TXPITCH"));
-    LogOutput = new wxTextCtrl(this, ID_LOGOUTPUT, _("Text"), wxPoint(368,32), wxSize(320,280), wxTE_MULTILINE, wxDefaultValidator, _T("ID_LOGOUTPUT"));
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Operation Status"), wxPoint(368,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    LogOutput = new wxTextCtrl(this, ID_LOGOUTPUT, _("Text"), wxPoint(392,32), wxSize(320,280), wxTE_MULTILINE, wxDefaultValidator, _T("ID_LOGOUTPUT"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Operation Status"), wxPoint(392,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
     StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Bearing"), wxPoint(64,16), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
     StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Pitch"), wxPoint(216,16), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Roll"), wxPoint(216,48), wxSize(40,22), 0, _T("ID_STATICTEXT4"));
@@ -108,6 +122,21 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     Button3 = new wxButton(this, ID_BUTTON3, _("L+1"), wxPoint(64,104), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
     Button4 = new wxButton(this, ID_BUTTON4, _("R+10"), wxPoint(240,136), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     Button5 = new wxButton(this, ID_BUTTON5, _("L+10"), wxPoint(64,136), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("KProp"), wxPoint(32,312), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _("KIntegral"), wxPoint(152,312), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+    StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _("KDifferential"), wxPoint(272,312), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
+    txBearingDiff = new wxTextCtrl(this, ID_TEXTCTRL1, _("Text"), wxPoint(152,136), wxSize(88,32), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    wxFont txBearingDiffFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,_T("Piboto Condensed"),wxFONTENCODING_DEFAULT);
+    txBearingDiff->SetFont(txBearingDiffFont);
+    txKProp = new wxTextCtrl(this, ID_TEXTCTRL2, _("Text"), wxPoint(32,336), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    txKIntegral = new wxTextCtrl(this, ID_TEXTCTRL3, _("Text"), wxPoint(152,336), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+    txKDifferential = new wxTextCtrl(this, ID_TEXTCTRL4, _("Text"), wxPoint(272,336), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+    btnKpPlus = new wxButton(this, ID_BUTTON6, _("+"), wxPoint(32,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    btnKpMinus = new wxButton(this, ID_BUTTON7, _("-"), wxPoint(88,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON7"));
+    btnKiPlus = new wxButton(this, ID_BUTTON8, _("+"), wxPoint(152,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+    btnKiMinus = new wxButton(this, ID_BUTTON9, _("-"), wxPoint(208,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON9"));
+    btnKdPlus = new wxButton(this, ID_BUTTON10, _("+"), wxPoint(272,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON10"));
+    btnKdMinus = new wxButton(this, ID_BUTTON11, _("-"), wxPoint(328,368), wxSize(32,32), 0, wxDefaultValidator, _T("ID_BUTTON11"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -131,12 +160,20 @@ DirectionKeeperFrame::DirectionKeeperFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON_STOP,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonStopClick);
     Connect(ID_BUTTON_FORWARD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonForwardClick);
     Connect(ID_BUTTON_BACK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButtonBackClick);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnButton1Click);
+    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKpPlusClick);
+    Connect(ID_BUTTON7,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKpMinusClick);
+    Connect(ID_BUTTON8,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKiPlusClick);
+    Connect(ID_BUTTON9,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKiMinusClick);
+    Connect(ID_BUTTON10,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKdPlusClick);
+    Connect(ID_BUTTON11,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DirectionKeeperFrame::OnbtnKdMinusClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&DirectionKeeperFrame::OnAbout);
     //*)
 
-    mainLoop = new MainLoop (LogOutput, txBearing, txPitch, txRoll, txLeftMotor, txRightMotor);
-    mainLoop->start();
+    mainLoop = new MainLoop (LogOutput, txBearing, txPitch, txRoll, txLeftMotor, txRightMotor, txBearingDiff,
+                             txKProp, txKIntegral, txKDifferential);
+    mainLoop->Start();
 
 }
 
@@ -144,7 +181,7 @@ DirectionKeeperFrame::~DirectionKeeperFrame()
 {
     //(*Destroy(DirectionKeeperFrame)
     //*)
-    mainLoop->stop();
+    mainLoop->Stop();
 }
 
 void DirectionKeeperFrame::OnQuit(wxCommandEvent& event)
@@ -200,4 +237,39 @@ void DirectionKeeperFrame::OnButtonStopClick(wxCommandEvent& event)
 {
     mainLoop->RightValue = 0;
     mainLoop->LeftValue = 0;
+}
+
+void DirectionKeeperFrame::OnButton1Click(wxCommandEvent& event)
+{
+    mainLoop->TogleLaneKeeping();
+}
+
+void DirectionKeeperFrame::OnbtnKpPlusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KProp += 0.1;
+}
+
+void DirectionKeeperFrame::OnbtnKpMinusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KProp -= 0.1;
+}
+
+void DirectionKeeperFrame::OnbtnKiPlusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KIntegral += 0.001;
+}
+
+void DirectionKeeperFrame::OnbtnKiMinusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KIntegral -= 0.001;
+}
+
+void DirectionKeeperFrame::OnbtnKdPlusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KDifferential += 0.1;
+}
+
+void DirectionKeeperFrame::OnbtnKdMinusClick(wxCommandEvent& event)
+{
+    mainLoop->directionControler->KDifferential -= 0.1;
 }

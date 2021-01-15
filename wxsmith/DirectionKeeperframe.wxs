@@ -2,7 +2,7 @@
 <wxsmith>
 	<object class="wxFrame" name="DirectionKeeperFrame">
 		<title>DirectionKeeper</title>
-		<size>705,363</size>
+		<size>744,474</size>
 		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
 		<object class="wxTextCtrl" name="ID_TXBEARING" variable="txBearing" member="yes">
@@ -18,13 +18,13 @@
 		</object>
 		<object class="wxTextCtrl" name="ID_LOGOUTPUT" variable="LogOutput" member="yes">
 			<value>Text</value>
-			<pos>368,32</pos>
+			<pos>392,32</pos>
 			<size>320,280</size>
 			<style>wxTE_MULTILINE</style>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Operation Status</label>
-			<pos>368,8</pos>
+			<pos>392,8</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Bearing</label>
@@ -83,6 +83,7 @@
 		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 			<label>Set Dir</label>
 			<pos>152,104</pos>
+			<handler function="OnButton1Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
 			<label>R+1</label>
@@ -99,6 +100,80 @@
 		<object class="wxButton" name="ID_BUTTON5" variable="Button5" member="yes">
 			<label>L+10</label>
 			<pos>64,136</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>KProp</label>
+			<pos>32,312</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>KIntegral</label>
+			<pos>152,312</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+			<label>KDifferential</label>
+			<pos>272,312</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="txBearingDiff" member="yes">
+			<value>Text</value>
+			<pos>152,136</pos>
+			<size>88,32</size>
+			<font>
+				<size>10</size>
+				<style>normal</style>
+				<weight>normal</weight>
+				<underlined>0</underlined>
+				<family>default</family>
+				<face>Piboto Condensed</face>
+			</font>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="txKProp" member="yes">
+			<value>Text</value>
+			<pos>32,336</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="txKIntegral" member="yes">
+			<value>Text</value>
+			<pos>152,336</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="txKDifferential" member="yes">
+			<value>Text</value>
+			<pos>272,336</pos>
+			<handler function="OnTextCtrl1Text1" entry="EVT_TEXT" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON6" variable="btnKpPlus" member="yes">
+			<label>+</label>
+			<pos>32,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKpPlusClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON7" variable="btnKpMinus" member="yes">
+			<label>-</label>
+			<pos>88,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKpMinusClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON8" variable="btnKiPlus" member="yes">
+			<label>+</label>
+			<pos>152,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKiPlusClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON9" variable="btnKiMinus" member="yes">
+			<label>-</label>
+			<pos>208,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKiMinusClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON10" variable="btnKdPlus" member="yes">
+			<label>+</label>
+			<pos>272,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKdPlusClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON11" variable="btnKdMinus" member="yes">
+			<label>-</label>
+			<pos>328,368</pos>
+			<size>32,32</size>
+			<handler function="OnbtnKdMinusClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">
